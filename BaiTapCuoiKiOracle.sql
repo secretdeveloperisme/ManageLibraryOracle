@@ -342,7 +342,6 @@ begin
         i := i+1;
     end loop;
 end;
-execute list_books_via_ma_docgia('DG00001');
 -------liet ket doc gia muon sach nhieu
 create or replace procedure thong_ke_dg_muon_sach_nhieu
 is
@@ -374,7 +373,6 @@ begin
     end loop;
     close thong_ke_dg_cursor;
 end;
-execute thong_ke_dg_muon_sach_nhieu;
 ----------------------------------FUNCTIONS------------------------------------
 --function lấy  trạng thái quyển sách
 --đang mượn hoặc trả
@@ -412,12 +410,6 @@ begin
         raise_application_error(-20000,'ma so sach dua vao khong hop le');
     end if;
 end;
---test function lay_trang_thai_sach
-declare 
-begin 
-    dbms_output.put_line('ma so sach : S000003 '||lay_trang_thai_sach('S000003'));
-    dbms_output.put_line('ma so sach : S000005 '||lay_trang_thai_sach('S000005'));
-end;
 ---function liet ke cac quyen sach dang hoach da tra dang muon trong khoang thoi gian 
 create or replace function liet_ke_sach_muon_theo_thoi_gian(
     ngay_bat_dau date,
@@ -443,6 +435,15 @@ begin
         end loop;
     return danh_sach_sach_string;
 end;
+------------------------------test procedure and functions----------------------
+execute list_books_via_ma_docgia('DG00001');
+execute thong_ke_dg_muon_sach_nhieu;
+--test function lay_trang_thai_sach
+declare 
+begin 
+    dbms_output.put_line('ma so sach : S000001 '||lay_trang_thai_sach('S000001'));
+    dbms_output.put_line('ma so sach : S000005 '||lay_trang_thai_sach('S000005'));
+end;
 -- test function liet_ke_sach_muon_theo_tg
 declare
     ngay_bat_dau date := date'2018-1-1';
@@ -465,4 +466,4 @@ grant select on the_thu_vien to b1809155;
 grant execute on list_books_via_ma_docgia to b1809155;
 grant execute on thong_ke_dg_muon_sach_nhieu to b1809155;
 grant execute on lay_trang_thai_sach to b1809155;
-grant execute on liet_ke_sach_muon_theo_tg to b1809155;
+grant execute on liet_ke_sach_muon_theo_thoi_gian to b1809155;
